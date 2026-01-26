@@ -3,3 +3,4 @@
 // from running step-based checks to know when to "heal"
 hp = MAX_HP;
 drilled = false;
+show_debug_message("reset HP for dirt block");

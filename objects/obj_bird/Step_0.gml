@@ -21,10 +21,10 @@ if (!place_meeting(x, y+1, collision_objects)) {
 	y = y - (y%64);
 }
 
-if (keyboard_check(vk_left) and !place_meeting(x-MAX_MOVE_SPEED, y, collision_objects)) {
+if (keyboard_check(vk_left) and !place_meeting(x+hspeed - 1, y, collision_objects)) {
 	hspeed -= MOVE_ACCEL;
 	if (hspeed * -1 > MAX_MOVE_SPEED) hspeed = MAX_MOVE_SPEED * -1;
-} else if (keyboard_check(vk_right) and !place_meeting(x+MAX_MOVE_SPEED, y, collision_objects)) {
+} else if (keyboard_check(vk_right) and !place_meeting(x+ hspeed + 1, y, collision_objects)) {
 	hspeed += MOVE_ACCEL;
 	if (hspeed > MAX_MOVE_SPEED) hspeed = MAX_MOVE_SPEED;
 } else {

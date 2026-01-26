@@ -8,14 +8,13 @@ if (!place_meeting(x, y+1, collision_objects)) {
 		vspeed += HOP_SPEED;
 		if (vspeed < MAX_HOP_SPEED) vspeed = MAX_HOP_SPEED;
 	}
-} else if (keyboard_check_pressed(vk_space) and !place_meeting(x, y-TILE_SIZE-1, collision_objects)) {
+} else if (keyboard_check_pressed(vk_space) and !place_meeting(x, y-1, collision_objects)) {
 	vspeed +=HOP_SPEED;
 	if (vspeed < MAX_HOP_SPEED) vspeed = MAX_HOP_SPEED;
 } else {
 	if (vspeed > 0 and y % 64 != 0) y = y - (y%64);
 	else if (vspeed < 0  and y % 64 != 0) y = y + (y%64);
 	vspeed = 0;
-	
 }
 
 if (keyboard_check(vk_left) and !place_meeting(x+hspeed - 1, y, collision_objects)) {

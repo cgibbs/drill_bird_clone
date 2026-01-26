@@ -1,0 +1,1 @@
+collision_objects = [obj_dirt, obj_sand, obj_brick]

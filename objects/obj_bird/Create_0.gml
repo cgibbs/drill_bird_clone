@@ -5,7 +5,7 @@ HOP_SPEED = -30;
 MAX_HOP_SPEED = -50;
 MOVE_ACCEL = 1;
 MAX_MOVE_SPEED = 10;
-collision_objects = [obj_brick, obj_dirt, obj_sand];
+collision_objects = [obj_brick, obj_dirt, obj_sand, obj_thwomp];
 breakable_objects = [obj_dirt, obj_sand];
 BREAK_DMG = 1;
 

@@ -32,6 +32,7 @@
     {"id":{"name":"sBird","path":"sprites/sBird/sBird.yy",},},
     {"id":{"name":"sBrick","path":"sprites/sBrick/sBrick.yy",},},
     {"id":{"name":"sdirt","path":"sprites/sdirt/sdirt.yy",},},
+    {"id":{"name":"sKirbysDad","path":"sprites/sKirbysDad/sKirbysDad.yy",},},
     {"id":{"name":"sSand","path":"sprites/sSand/sSand.yy",},},
     {"id":{"name":"sThwomp","path":"sprites/sThwomp/sThwomp.yy",},},
   ],

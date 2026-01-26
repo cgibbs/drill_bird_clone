@@ -27,7 +27,7 @@ if (keyboard_check(vk_left) and !place_meeting(x+hspeed - 1, y, collision_object
 	hspeed = 0;	
 }
 
-if (keyboard_check(vk_left) 
+if (keyboard_check(vk_left) and vspeed == 0 
 	and place_meeting(x - 4, y+(TILE_SIZE/2), breakable_objects)
 	and ticks % 10 == 0) 
 	{
@@ -45,7 +45,7 @@ if (keyboard_check(vk_left)
 	}
 }
 
-if (keyboard_check(vk_right) 
+if (keyboard_check(vk_right) and vspeed == 0 
 	and place_meeting(x + 4, y+(TILE_SIZE/2), breakable_objects)
 	and ticks % 10 == 0) 
 	{
@@ -67,7 +67,7 @@ if (keyboard_check(vk_right)
 	}	
 }
 
-if (keyboard_check(vk_down) 
+if (keyboard_check(vk_down) and vspeed == 0 
 	and place_meeting(x+(TILE_SIZE/2), y + TILE_SIZE + 4, breakable_objects)
 	and ticks % 10 == 0) 
 	{
@@ -85,7 +85,7 @@ if (keyboard_check(vk_down)
 	}
 }
 
-if (keyboard_check(vk_up) 
+if (keyboard_check(vk_up) and vspeed == 0 
 	and place_meeting(x+(TILE_SIZE/2), y - 4, breakable_objects)
 	and ticks % 10 == 0) 
 	{

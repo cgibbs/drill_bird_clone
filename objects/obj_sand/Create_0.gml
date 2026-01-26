@@ -1,0 +1,2 @@
+MAX_HP = 3
+TILE_SIZE = 64;

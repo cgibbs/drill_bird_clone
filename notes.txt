@@ -1,0 +1,2 @@
+use alarms to set up the sand blocks that dissolve
+also use alarms to set up delayed falls for the thwomp enemies

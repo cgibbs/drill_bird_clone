@@ -1,5 +1,13 @@
 ticks += 1;
 
+if (facing == "left") {
+	if (succed_item == undefined) image_index = 0;
+	else image_index = 4;
+} else if (facing == "right") {
+	if (succed_item == undefined) image_index = 1;	
+	else image_index = 5;
+}
+
 if (!place_meeting(x, y+1, collision_objects)) {
 	vspeed += DROP_SPEED;
 	if (vspeed > MAX_DROP_SPEED) vspeed = MAX_DROP_SPEED;
@@ -31,87 +39,91 @@ if (keyboard_check(vk_left) and !place_meeting(x+hspeed - 1, y, collision_object
 }
 
 if (keyboard_check(vk_left) and vspeed == 0 
-	and place_meeting(x - 4, y+(TILE_SIZE/2), breakable_objects)
-	and ticks % 10 == 0) 
+	and place_meeting(x - 4, y+(TILE_SIZE/2), breakable_objects))
 	{
-	show_debug_message("drilling!");
-	var inst = collision_circle(x-5, y+(TILE_SIZE/2), 2, breakable_objects, false, true);
-	if (inst > 1) {
-		inst.hp -= BREAK_DMG;
-		if (inst.drilled == false) {
-			inst.drilled = true;
-			// two seconds, might move this to an object variable to make it less of a magic number,
-			// and also calculate it based on drill speed for the bird?
-			inst.alarm[0] = game_get_speed(gamespeed_fps) * 2;
+		image_index = 6;
+		if (ticks % 10 == 0) 
+		{
+		show_debug_message("drilling!");
+		var inst = collision_circle(x-5, y+(TILE_SIZE/2), 2, breakable_objects, false, true);
+		if (inst > 1) {
+			inst.hp -= BREAK_DMG;
+			if (inst.drilled == false) {
+				inst.drilled = true;
+				// two seconds, might move this to an object variable to make it less of a magic number,
+				// and also calculate it based on drill speed for the bird?
+				inst.alarm[0] = game_get_speed(gamespeed_fps) * 2;
+			}
+			if (inst.hp < 1) instance_destroy(inst, true);	
 		}
-		if (inst.hp < 1) instance_destroy(inst, true);	
 	}
 }
 
 if (keyboard_check(vk_right) and vspeed == 0 
-	and place_meeting(x + 4, y+(TILE_SIZE/2), breakable_objects)
-	and ticks % 10 == 0) 
+	and place_meeting(x + 4, y+(TILE_SIZE/2), breakable_objects))
 	{
-	show_debug_message("drilling!");
-	var inst = collision_circle(x+TILE_SIZE+5, y+(TILE_SIZE/2), 2, breakable_objects, false, true);
-	if (inst > 1) {
-		inst.hp -= BREAK_DMG;
-		if (inst.drilled == false) {
-			show_debug_message("starting drill damage!");
-			inst.drilled = true;
-			// two seconds, might move this to an object variable to make it less of a magic number,
-			// and also calculate it based on drill speed for the bird?
-			inst.alarm[0] = game_get_speed(gamespeed_fps) * 2;
+		image_index = 7
+		if (ticks % 10 == 0) 
+		{
+		show_debug_message("drilling!");
+		var inst = collision_circle(x+TILE_SIZE+5, y+(TILE_SIZE/2), 2, breakable_objects, false, true);
+		if (inst > 1) {
+			inst.hp -= BREAK_DMG;
+			if (inst.drilled == false) {
+				show_debug_message("starting drill damage!");
+				inst.drilled = true;
+				// two seconds, might move this to an object variable to make it less of a magic number,
+				// and also calculate it based on drill speed for the bird?
+				inst.alarm[0] = game_get_speed(gamespeed_fps) * 2;
+			}
+			if (inst.hp < 1) {
+				instance_destroy(inst);
+				show_debug_message("destroying drilled thing!");
+			}
 		}
-		if (inst.hp < 1) {
-			instance_destroy(inst);
-			show_debug_message("destroying drilled thing!");
-		}
-	}	
+	}
 }
 
 if (keyboard_check(vk_down) and vspeed == 0 
-	and place_meeting(x+(TILE_SIZE/2), y + TILE_SIZE + 4, breakable_objects)
-	and ticks % 10 == 0) 
+	and place_meeting(x+(TILE_SIZE/2), y + TILE_SIZE + 4, breakable_objects))
 	{
-	show_debug_message("drilling!");
-	var inst = collision_circle(x+(TILE_SIZE/2), y + TILE_SIZE + 4, 2, breakable_objects, false, true);
-	if (inst > 1) {
-		inst.hp -= BREAK_DMG;
-		if (inst.drilled == false) {
-			inst.drilled = true;
-			// two seconds, might move this to an object variable to make it less of a magic number,
-			// and also calculate it based on drill speed for the bird?
-			inst.alarm[0] = game_get_speed(gamespeed_fps) * 2;
+		image_index = 9;
+		if (ticks % 10 == 0) 
+		{
+		show_debug_message("drilling!");
+		var inst = collision_circle(x+(TILE_SIZE/2), y + TILE_SIZE + 4, 2, breakable_objects, false, true);
+		if (inst > 1) {
+			inst.hp -= BREAK_DMG;
+			if (inst.drilled == false) {
+				inst.drilled = true;
+				// two seconds, might move this to an object variable to make it less of a magic number,
+				// and also calculate it based on drill speed for the bird?
+				inst.alarm[0] = game_get_speed(gamespeed_fps) * 2;
+			}
+			if (inst.hp < 1) instance_destroy(inst);
 		}
-		if (inst.hp < 1) instance_destroy(inst);
 	}
 }
 
 if (keyboard_check(vk_up) and vspeed == 0 
-	and place_meeting(x+(TILE_SIZE/2), y - 4, breakable_objects)
-	and ticks % 10 == 0) 
+	and place_meeting(x+(TILE_SIZE/2), y - 4, breakable_objects))
 	{
-	show_debug_message("drilling!");
-	var inst = collision_circle(x+(TILE_SIZE/2), y - 4, 2, breakable_objects, false, true);
-	if (inst > 1) {
-		inst.hp -= BREAK_DMG;
-		if (inst.drilled == false) {
-			inst.drilled = true;
-			// two seconds, might move this to an object variable to make it less of a magic number,
-			// and also calculate it based on drill speed for the bird?
-			inst.alarm[0] = game_get_speed(gamespeed_fps) * 2;
+	image_index = 8;
+	if (ticks % 10 == 0) 
+		{
+		show_debug_message("drilling!");
+		var inst = collision_circle(x+(TILE_SIZE/2), y - 4, 2, breakable_objects, false, true);
+		if (inst > 1) {
+			inst.hp -= BREAK_DMG;
+			if (inst.drilled == false) {
+				inst.drilled = true;
+				// two seconds, might move this to an object variable to make it less of a magic number,
+				// and also calculate it based on drill speed for the bird?
+				inst.alarm[0] = game_get_speed(gamespeed_fps) * 2;
+			}
+			if (inst.hp < 1) instance_destroy(inst);
 		}
-		if (inst.hp < 1) instance_destroy(inst);
 	}
-}
-
-if (facing == "left") {
-	if (succed_item == undefined) image_index = 0;
-	else image_index = 4;
-} else if (facing == "right") {
-	if (succed_item == undefined) image_index = 1;	
-	else image_index = 5;
 }
 
 if (keyboard_check(vk_shift) and can_succ) {
@@ -149,12 +161,14 @@ if (keyboard_check(vk_shift) and can_succ) {
 			succed_item = undefined;
 			can_succ = false;
 			alarm[0] = game_get_speed(gamespeed_fps) * .4;
+			x = x + TILE_SIZE - ((x + TILE_SIZE)%64);
 		} else if (facing == "right" and !place_meeting((x + (TILE_SIZE ) - 10), y, collision_objects)) {
 			var new_inst_x = (x + (TILE_SIZE * 2) - 10) - ((x+TILE_SIZE-10) % 64);
 			var new_inst_y = y - (y%64);
 			instance_create_layer(new_inst_x, new_inst_y, "Instances", succed_item);
 			succed_item = undefined;
 			can_succ = false;
+			x = x - (x%64);
 			alarm[0] = game_get_speed(gamespeed_fps) * .4;
 		}
 	}

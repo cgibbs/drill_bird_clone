@@ -16,3 +16,4 @@ image_speed = 0;
 facing = "left";
 succed_item = undefined;
 can_succ = true;
+drilling = false;

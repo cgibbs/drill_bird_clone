@@ -1,5 +1,7 @@
 ticks += 1;
 
+var oldDrilling = drilling;
+
 if (facing == "left") {
 	if (succed_item == undefined) image_index = 0;
 	else image_index = 4;
@@ -11,13 +13,15 @@ if (facing == "left") {
 if (!place_meeting(x, y+1, collision_objects)) {
 	vspeed += DROP_SPEED;
 	if (vspeed > MAX_DROP_SPEED) vspeed = MAX_DROP_SPEED;
-	if (keyboard_check_pressed(vk_space)) {
+	if (keyboard_check_pressed(vk_space) and succed_item == undefined) {
 		if (vspeed > 0) vspeed = 0;
 		vspeed += HOP_SPEED;
+		audio_play_sound(sndJump, 10, false);
 		if (vspeed < MAX_HOP_SPEED) vspeed = MAX_HOP_SPEED;
 	}
 } else if (keyboard_check_pressed(vk_space) and !place_meeting(x, y-1, collision_objects)) {
 	vspeed +=HOP_SPEED;
+	audio_play_sound(sndJump, 10, false);
 	if (vspeed < MAX_HOP_SPEED) vspeed = MAX_HOP_SPEED;
 } else {
 	if (vspeed > 0 and y % 64 != 0) y = y - (y%64);
@@ -25,8 +29,10 @@ if (!place_meeting(x, y+1, collision_objects)) {
 	vspeed = 0;
 }
 
+var oldFacing = facing;
 if (keyboard_check(vk_left)) facing = "left";
 else if (keyboard_check(vk_right)) facing = "right";
+if (oldFacing != facing) hspeed = 0;
 
 if (keyboard_check(vk_left) and !place_meeting(x+hspeed - 1, y, collision_objects)) {
 	hspeed -= MOVE_ACCEL;
@@ -39,12 +45,13 @@ if (keyboard_check(vk_left) and !place_meeting(x+hspeed - 1, y, collision_object
 }
 
 if (keyboard_check(vk_left) and vspeed == 0 
-	and place_meeting(x - 4, y+(TILE_SIZE/2), breakable_objects))
+	and place_meeting(x - 4, y-(TILE_SIZE/2), breakable_objects))
 	{
 		image_index = 6;
 		if (ticks % 10 == 0) 
 		{
 		show_debug_message("drilling!");
+		drilling = true;
 		var inst = collision_circle(x-5, y+(TILE_SIZE/2), 2, breakable_objects, false, true);
 		if (inst > 1) {
 			inst.hp -= BREAK_DMG;
@@ -54,18 +61,23 @@ if (keyboard_check(vk_left) and vspeed == 0
 				// and also calculate it based on drill speed for the bird?
 				inst.alarm[0] = game_get_speed(gamespeed_fps) * 2;
 			}
-			if (inst.hp < 1) instance_destroy(inst, true);	
+			if (inst.hp < 1) 
+			{
+				instance_destroy(inst);
+				drilling = false;
+			}
 		}
 	}
 }
 
 if (keyboard_check(vk_right) and vspeed == 0 
-	and place_meeting(x + 4, y+(TILE_SIZE/2), breakable_objects))
+	and place_meeting(x + 4, y-(TILE_SIZE/2), breakable_objects))
 	{
 		image_index = 7
 		if (ticks % 10 == 0) 
 		{
 		show_debug_message("drilling!");
+		drilling = true;
 		var inst = collision_circle(x+TILE_SIZE+5, y+(TILE_SIZE/2), 2, breakable_objects, false, true);
 		if (inst > 1) {
 			inst.hp -= BREAK_DMG;
@@ -76,9 +88,10 @@ if (keyboard_check(vk_right) and vspeed == 0
 				// and also calculate it based on drill speed for the bird?
 				inst.alarm[0] = game_get_speed(gamespeed_fps) * 2;
 			}
-			if (inst.hp < 1) {
+			if (inst.hp < 1) 
+			{
 				instance_destroy(inst);
-				show_debug_message("destroying drilled thing!");
+				drilling = false;
 			}
 		}
 	}
@@ -91,6 +104,7 @@ if (keyboard_check(vk_down) and vspeed == 0
 		if (ticks % 10 == 0) 
 		{
 		show_debug_message("drilling!");
+		drilling = true;
 		var inst = collision_circle(x+(TILE_SIZE/2), y + TILE_SIZE + 4, 2, breakable_objects, false, true);
 		if (inst > 1) {
 			inst.hp -= BREAK_DMG;
@@ -100,7 +114,11 @@ if (keyboard_check(vk_down) and vspeed == 0
 				// and also calculate it based on drill speed for the bird?
 				inst.alarm[0] = game_get_speed(gamespeed_fps) * 2;
 			}
-			if (inst.hp < 1) instance_destroy(inst);
+			if (inst.hp < 1) 
+			{
+				instance_destroy(inst);
+				drilling = false;
+			}
 		}
 	}
 }
@@ -112,6 +130,7 @@ if (keyboard_check(vk_up) and vspeed == 0
 	if (ticks % 10 == 0) 
 		{
 		show_debug_message("drilling!");
+		drilling = true;
 		var inst = collision_circle(x+(TILE_SIZE/2), y - 4, 2, breakable_objects, false, true);
 		if (inst > 1) {
 			inst.hp -= BREAK_DMG;
@@ -121,7 +140,11 @@ if (keyboard_check(vk_up) and vspeed == 0
 				// and also calculate it based on drill speed for the bird?
 				inst.alarm[0] = game_get_speed(gamespeed_fps) * 2;
 			}
-			if (inst.hp < 1) instance_destroy(inst);
+			if (inst.hp < 1) 
+			{
+				instance_destroy(inst);
+				drilling = false;
+			}
 		}
 	}
 }
@@ -129,6 +152,11 @@ if (keyboard_check(vk_up) and vspeed == 0
 if (keyboard_check(vk_shift) and can_succ) {
 	if (succed_item == undefined) {	
 		// do the succ
+		if (audio_is_playing(sndSucc)) {
+			
+		} else {
+			audio_play_sound(sndSucc, 10, false);
+		}
 		if (facing == "left") {
 			image_index = 2;
 			var inst = collision_circle(x-(TILE_SIZE)+10, y+(TILE_SIZE/2), 2, breakable_objects, false, true);
@@ -154,6 +182,11 @@ if (keyboard_check(vk_shift) and can_succ) {
 		}
 	} else {
 	// spit it out
+		if (audio_is_playing(sndSpit)) {
+			
+		} else {
+			audio_play_sound(sndSpit, 10, false);
+		}
 		if (facing == "left" and !place_meeting(x-TILE_SIZE-10, y, collision_objects)) {
 			var new_inst_x = (x-TILE_SIZE-10) - ((x-TILE_SIZE-10) % 64);
 			var new_inst_y = y;
@@ -171,5 +204,21 @@ if (keyboard_check(vk_shift) and can_succ) {
 			x = x - (x%64);
 			alarm[0] = game_get_speed(gamespeed_fps) * .4;
 		}
+	}
+}
+
+if (image_index < 5) drilling = false;
+
+if (drilling) {
+	if (audio_is_playing(sndDrill)) {
+		
+	} else {
+		audio_play_sound(sndDrill, 9, false);
+	}
+} else {
+	if (audio_is_playing(sndDrill)) {
+		audio_stop_sound(sndDrill);
+	} else {
+		
 	}
 }

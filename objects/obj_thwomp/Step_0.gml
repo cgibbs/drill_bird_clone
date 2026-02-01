@@ -10,6 +10,7 @@ if (place_meeting(x, y+1, collision_objects) and !still) {
 	if (vspeed > 0 and y % 64 != 0) y = y - (y%64);
 	else if (vspeed < 0  and y % 64 != 0) y = y + (y%64);
 	vspeed = 0;
+	audio_play_sound(sndThwompLand, 8, false);
 	still = true;
 	timer_set = false;
 }

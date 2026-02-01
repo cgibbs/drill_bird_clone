@@ -45,7 +45,7 @@ if (keyboard_check(vk_left) and !place_meeting(x+hspeed - 1, y, collision_object
 }
 
 if (keyboard_check(vk_left) and vspeed == 0 
-	and place_meeting(x - 4, y-(TILE_SIZE/2), breakable_objects))
+	and place_meeting(x - 4, y, breakable_objects))
 	{
 		image_index = 6;
 		if (ticks % 10 == 0) 
@@ -71,7 +71,7 @@ if (keyboard_check(vk_left) and vspeed == 0
 }
 
 if (keyboard_check(vk_right) and vspeed == 0 
-	and place_meeting(x + 4, y-(TILE_SIZE/2), breakable_objects))
+	and place_meeting(x + 4, y, breakable_objects))
 	{
 		image_index = 7
 		if (ticks % 10 == 0) 
@@ -181,16 +181,16 @@ if (keyboard_check(vk_shift) and can_succ) {
 			}
 		}
 	} else {
-	// spit it out
-		if (audio_is_playing(sndSpit)) {
-			
-		} else {
-			audio_play_sound(sndSpit, 10, false);
-		}
 		if (facing == "left" and !place_meeting(x-TILE_SIZE-10, y, collision_objects)) {
 			var new_inst_x = (x-TILE_SIZE-10) - ((x-TILE_SIZE-10) % 64);
-			var new_inst_y = y;
+			var new_inst_y = y - (y%64);
 			instance_create_layer(new_inst_x, new_inst_y, "Instances", succed_item);
+			// spit it out
+			if (audio_is_playing(sndSpit)) {
+			
+			} else {
+				audio_play_sound(sndSpit, 10, false);
+			}
 			succed_item = undefined;
 			can_succ = false;
 			alarm[0] = game_get_speed(gamespeed_fps) * .4;
@@ -199,6 +199,12 @@ if (keyboard_check(vk_shift) and can_succ) {
 			var new_inst_x = (x + (TILE_SIZE * 2) - 10) - ((x+TILE_SIZE-10) % 64);
 			var new_inst_y = y - (y%64);
 			instance_create_layer(new_inst_x, new_inst_y, "Instances", succed_item);
+			// spit it out
+			if (audio_is_playing(sndSpit)) {
+			
+			} else {
+				audio_play_sound(sndSpit, 10, false);
+			}
 			succed_item = undefined;
 			can_succ = false;
 			x = x - (x%64);

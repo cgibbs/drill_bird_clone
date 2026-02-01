@@ -11,8 +11,8 @@
   "defaultScriptType":1,
   "Folders":[
     {"$GMFolder":"","%Name":"assets","folderPath":"folders/assets.yy","name":"assets","resourceType":"GMFolder","resourceVersion":"2.0",},
-    {"$GMFolder":"","%Name":"sounds","folderPath":"folders/assets/sounds.yy","name":"sounds","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"objects","folderPath":"folders/assets/objects.yy","name":"objects","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"sounds","folderPath":"folders/assets/sounds.yy","name":"sounds","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"sprites","folderPath":"folders/assets/sprites.yy","name":"sprites","resourceType":"GMFolder","resourceVersion":"2.0",},
   ],
   "ForcedPrefabProjectReferences":[],
@@ -34,6 +34,7 @@
     {"id":{"name":"sndJump","path":"sounds/sndJump/sndJump.yy",},},
     {"id":{"name":"sndSpit","path":"sounds/sndSpit/sndSpit.yy",},},
     {"id":{"name":"sndSucc","path":"sounds/sndSucc/sndSucc.yy",},},
+    {"id":{"name":"sndThwompLand","path":"sounds/sndThwompLand/sndThwompLand.yy",},},
     {"id":{"name":"sBird","path":"sprites/sBird/sBird.yy",},},
     {"id":{"name":"sBrick","path":"sprites/sBrick/sBrick.yy",},},
     {"id":{"name":"sdirt","path":"sprites/sdirt/sdirt.yy",},},
